@@ -9,7 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
+	// "strings"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -92,10 +92,12 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 	}
 	defer db.Close()
 
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
+		idx += 1
+		fmt.Println(idx)
 		fmt.Println(info.Name())
 		// Check if it's a regular file and has .jpg extension (case insensitive)
 		// if !info.IsDir() && strings.HasSuffix(strings.ToLower(info.Name()), ".jpg") {
