@@ -60,7 +60,7 @@ func calc_name(imgpath string) string {
 	return fmt.Sprintf("%x", hasher.Sum(nil))
 }
 
-func create_img_db_table(dpath string) {
+func create_img_db_table(dbpath string) {
 	
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
