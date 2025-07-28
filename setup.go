@@ -44,22 +44,6 @@ func img_orient(imgPath string) (string, error) {
 	}
 }
 
-func calc_name(imgpath string) string {
-	file, err := os.Open(imgpath)
-	if err != nil {
-		return ""
-	}
-	defer file.Close()
-
-	hasher := md5.New()
-	_, err = io.Copy(hasher, file)
-	if err != nil {
-		return ""
-	}
-
-	return fmt.Sprintf("%x", hasher.Sum(nil))
-}
-
 func create_img_db_table(dbpath string) {
 	db, err := sql.Open("sqlite3", dbpath)
 	if err != nil {
@@ -122,16 +106,12 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 		return nil
 	})
 
-	// if err != nil {
-	// 	return err
-	// }
-
 	return nil
 }
 
 func main() {
 	dbpath := "/home/whitepi/go/slideshowsetupgo/imagesDB"
-	imagedir := "/home/whitepi/Pictures/pic1/pics/"
+	imagedir := "/home/whitepi/Pictures/"
 	create_img_db_table(dbpath)
 	Walk_Img_Dir(dbpath, imagedir)
 }
