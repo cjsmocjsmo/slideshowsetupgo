@@ -131,7 +131,7 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 }
 
 func main() {
-	dbpath := "/home/whitepi/go/slideshowgo/imagesDB"
+	dbpath := "/home/whitepi/go/slideshowsetupgo/imagesDB"
 	imagedir := "/home/whitepi/Pictures/pic1/pics/"
 	Walk_Img_Dir(dbpath, imagedir)
 }
