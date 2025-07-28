@@ -1,12 +1,12 @@
 package main
 
 import (
-	"crypto/md5"
+	// "crypto/md5"
 	"database/sql"
 	"fmt"
 	"image"
 	_ "image/jpeg"
-	"io"
+	// "io"
 	"os"
 	"path/filepath"
 	"strings"
