@@ -104,10 +104,11 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 		// Check if it's a regular file and has .jpg extension (case insensitive)
 		// if !info.IsDir() && strings.HasSuffix(strings.ToLower(info.Name()), ".jpg") {
 		// 	idx += 1
-		// 	orientation, orientErr := img_orient(path)
-		// 	if orientErr != nil {
-		// 		return orientErr
-		// 	}
+		orientation, orientErr := img_orient(path)
+		if orientErr != nil {
+			return orientErr
+		}
+		fmt.Println(orientation)
 		// 	imageData := ImageData{
 		// 		Name:        calc_name(path),
 		// 		Path:        path,
