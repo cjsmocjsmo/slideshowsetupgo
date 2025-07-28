@@ -99,9 +99,9 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 		idx += 1
 		ext := filepath.Ext(strings.ToLower(info.Name()))
 		if ext == ".jpg" {
-			fmt.Println(idx)
-			fmt.Println(info.Name())
-			fmt.Println(ext)
+			// fmt.Println(idx)
+			// fmt.Println(info.Name())
+			// fmt.Println(ext)
 		
 		
 		// Check if it's a regular file and has .jpg extension (case insensitive)
@@ -111,15 +111,16 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 			if orientErr != nil {
 				return orientErr
 			}
-			fmt.Println(orientation)
+			// fmt.Println(orientation)
+		
+			imageData := ImageData{
+				Name:        info.Name(),
+				Path:        path,
+				Idx:         idx,
+				Orientation: orientation,
+			}
+			fmt.Println(imageData)
 		}
-		// 	imageData := ImageData{
-		// 		Name:        calc_name(path),
-		// 		Path:        path,
-		// 		Idx:         idx,
-		// 		Orientation: orientation,
-		// 	}
-
 		// 	insertSQL := `INSERT INTO images (Name, Path, Idx, Orientation) VALUES (?, ?, ?, ?)`
 		// 	_, err = db.Exec(insertSQL, imageData.Name, imageData.Path, imageData.Idx, imageData.Orientation)
 		// 	if err != nil {
