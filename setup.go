@@ -61,7 +61,7 @@ func calc_name(imgpath string) string {
 }
 
 func create_img_db_table(dpath string) {
-	dbPath := filepath.Join(dpath, "images.db")
+	
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		fmt.Println("Failed to open database:", err)
