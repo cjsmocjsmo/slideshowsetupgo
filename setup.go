@@ -98,7 +98,7 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 		}
 		idx += 1
 		ext := filepath.Ext(strings.ToLower(info.Name()))
-		if ext = ".jpg" {
+		if ext == ".jpg" {
 			fmt.Println(idx)
 			fmt.Println(info.Name())
 			fmt.Println(ext)
