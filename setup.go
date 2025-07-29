@@ -16,6 +16,7 @@ import (
 type ImageData struct {
 	Name string
 	Path string
+	Http string
 	Idx int
 	Orientation string
 }
@@ -56,6 +57,7 @@ func create_img_db_table(dbpath string) {
 	CREATE TABLE IF NOT EXISTS images (
 		Name TEXT,
 		Path TEXT,
+		Http TEXT,
 		Idx INTEGER,
 		Orientation TEXT
 	);`
@@ -65,6 +67,9 @@ func create_img_db_table(dbpath string) {
 		return
 	}
 }
+
+func create_http_path(fpath string) string {
+	return strings.Replace(fpath, "/home/pimedia/Pictures/", "/static/", 1)
 
 func Walk_Img_Dir(dbpath string, dir string) error {
 	idx := 0
@@ -90,13 +95,14 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 			imageData := ImageData{
 				Name:        info.Name(),
 				Path:        path,
+				Http:		 create_http_path(path),
 				Idx:         idx,
 				Orientation: orientation,
 			}
 			fmt.Println(imageData)
 		
-			insertSQL := `INSERT INTO images (Name, Path, Idx, Orientation) VALUES (?, ?, ?, ?)`
-			_, err = db.Exec(insertSQL, imageData.Name, imageData.Path, imageData.Idx, imageData.Orientation)
+			insertSQL := `INSERT INTO images (Name, Path, Http, Idx, Orientation) VALUES (?, ?, ?, ?, ?)`
+			_, err = db.Exec(insertSQL, imageData.Name, imageData.Path, imageData.Http, imageData.Idx, imageData.Orientation)
 			if err != nil {
 				return err
 			}
