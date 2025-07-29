@@ -70,6 +70,7 @@ func create_img_db_table(dbpath string) {
 
 func create_http_path(fpath string) string {
 	return strings.Replace(fpath, "/home/pimedia/Pictures/", "/static/", 1)
+}
 
 func Walk_Img_Dir(dbpath string, dir string) error {
 	idx := 0
