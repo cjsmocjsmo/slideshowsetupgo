@@ -7,17 +7,17 @@ import (
 	"image"
 	_ "image/jpeg"
 	// "io"
+	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"path/filepath"
 	"strings"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 type ImageData struct {
-	Name string
-	Path string
-	Http string
-	Idx int
+	Name        string
+	Path        string
+	Http        string
+	Idx         int
 	Orientation string
 }
 
@@ -92,23 +92,22 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 			if orientErr != nil {
 				return orientErr
 			}
-		
+
 			imageData := ImageData{
 				Name:        info.Name(),
 				Path:        path,
-				Http:		 create_http_path(path),
+				Http:        create_http_path(path),
 				Idx:         idx,
 				Orientation: orientation,
 			}
 			fmt.Println(imageData)
-		
+
 			insertSQL := `INSERT INTO images (Name, Path, Http, Idx, Orientation) VALUES (?, ?, ?, ?, ?)`
 			_, err = db.Exec(insertSQL, imageData.Name, imageData.Path, imageData.Http, imageData.Idx, imageData.Orientation)
 			if err != nil {
 				return err
 			}
 		}
-		
 
 		return nil
 	})
@@ -117,11 +116,8 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 }
 
 func main() {
-	dbpath := "/home/pimedia/Pictures/imagesDB"
+	dbpath := "/home/pimedia/imagesDB"
 	imagedir := "/home/pimedia/Pictures/"
 	create_img_db_table(dbpath)
 	Walk_Img_Dir(dbpath, imagedir)
 }
-
-	
-
