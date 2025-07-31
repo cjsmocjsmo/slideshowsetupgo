@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"image"
 	_ "image/jpeg"
+
 	// "io"
-	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"path/filepath"
 	"strings"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type ImageData struct {
@@ -81,12 +83,12 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 	}
 	defer db.Close()
 
-	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err = filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
 		idx += 1
-		ext := filepath.Ext(strings.ToLower(info.Name()))
+		ext := filepath.Ext(strings.ToLower(d.Name()))
 		if ext == ".jpg" {
 			orientation, orientErr := img_orient(path)
 			if orientErr != nil {
@@ -94,7 +96,7 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 			}
 
 			imageData := ImageData{
-				Name:        info.Name(),
+				Name:        d.Name(),
 				Path:        path,
 				Http:        create_http_path(path),
 				Idx:         idx,
