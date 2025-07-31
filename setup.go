@@ -119,7 +119,7 @@ func Walk_Img_Dir(dbpath string, dir string) error {
 
 func main() {
 	dbpath := "/home/pimedia/imagesDB"
-	imagedir := "/home/pimedia/Pictures/test/"
+	imagedir := "/home/pimedia/Pictures/test"
 	create_img_db_table(dbpath)
 	Walk_Img_Dir(dbpath, imagedir)
 }
