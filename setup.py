@@ -75,6 +75,7 @@ def walk_img_dir(db_path: str, directory: str) -> Optional[Exception]:
     Walk through the directory, find JPEG images, and insert their data into the database.
     """
     idx = 0
+    failed_images = []
     
     try:
         conn = sqlite3.connect(db_path)
@@ -111,12 +112,23 @@ def walk_img_dir(db_path: str, directory: str) -> Optional[Exception]:
                         ))
                         
                     except Exception as e:
-                        print(f"Error processing image {file_path}: {e}")
-                        conn.close()
-                        return e
+                        print(f"Skipping image {file_path}: {e}")
+                        failed_images.append(file_path)
+                        continue
         
         conn.commit()
         conn.close()
+        
+        # Print summary of failed images
+        if failed_images:
+            print(f"\n--- Summary ---")
+            print(f"Failed to process {len(failed_images)} image(s):")
+            for failed_img in failed_images:
+                print(f"  - {failed_img}")
+        else:
+            print(f"\n--- Summary ---")
+            print("All images processed successfully!")
+        
         return None
         
     except sqlite3.Error as e:
